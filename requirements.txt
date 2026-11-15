@@ -1,0 +1,16 @@
+streamlit>=1.50
+plotly>=6
+pandas>=2.2
+numpy
+scipy
+pyarrow
+duckdb
+lasio
+segyio
+pyproj
+requests
+openpyxl
+anthropic
+# development
+pytest
+playwright

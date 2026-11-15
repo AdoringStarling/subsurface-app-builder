@@ -1,0 +1,12 @@
+streamlit>=1.50
+plotly>=6
+pandas>=2.2
+numpy
+pyarrow
+lasio
+# add what the app uses:
+# segyio scipy        seismic
+# duckdb requests     FactPages tables
+# pyproj              coordinate conversion
+# anthropic           LLM features
+# openpyxl            Excel inputs

@@ -1,0 +1,7 @@
+{
+  "name": "subsurface-app-builder",
+  "description": "Build apps on subsurface data: well logs (LAS), seismic (SEG-Y) and open Norwegian continental shelf data.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "keywords": ["geoscience", "well-logs", "seismic", "las", "segy", "petrophysics", "streamlit"]
+}

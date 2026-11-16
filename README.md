@@ -25,7 +25,7 @@ The skill gives the coding agent what a geoscientist would otherwise have to exp
 Copy the skill folder into your Claude Code skills directory:
 
 ```bash
-git clone <this repository>
+git clone https://github.com/AdoringStarling/subsurface-app-builder
 # macOS / Linux
 cp -r subsurface-app-builder/skills/subsurface-app-builder ~/.claude/skills/
 # Windows (PowerShell)

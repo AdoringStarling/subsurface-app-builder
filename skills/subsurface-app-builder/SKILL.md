@@ -1,6 +1,6 @@
 ---
 name: subsurface-app-builder
-description: Build working apps and analyses on subsurface (oil and gas, geoscience) data - well logs in LAS, seismic in SEG-Y, and public Norwegian continental shelf data such as Sodir/NPD FactPages, Diskos, Volve and FORCE datasets. Use this skill whenever the user mentions well logs, LAS or lasio files, log curves or mnemonics (GR, RHOB, NPHI, resistivity, sonic), petrophysics (shale volume, porosity, water saturation, net pay), lithology or facies prediction, SEG-Y or segyio, seismic sections, inlines/crosslines, horizons or attributes, wellbores, fields, discoveries or production on the Norwegian shelf, or wants a viewer, dashboard, QC tool, map or LLM assistant for geoscientists, petrophysicists or reservoir and drilling engineers - also when they ask for project ideas for an energy or geoscience hackathon, or how to demo such an app, even if they do not name a file format.
+description: Build working apps and analyses on subsurface (oil and gas, geoscience) data - well logs in LAS, seismic in SEG-Y, and public Norwegian continental shelf data such as Sodir/NPD FactPages, Diskos, Volve and FORCE datasets. Use this skill whenever the user mentions well logs, LAS or lasio files, log curves or mnemonics (GR, RHOB, NPHI, resistivity, sonic), petrophysics (shale volume, porosity, water saturation, net pay), lithology or facies prediction, SEG-Y or segyio, seismic sections, inlines/crosslines, horizons or attributes, 3D or 4D (time-lapse) seismic, base and monitor surveys, geosteering, horizontal wells, well trajectories or surveys, LWD logs, wellbores, fields, discoveries or production on the Norwegian shelf, or wants a viewer, dashboard, QC tool, map or LLM assistant for geoscientists, petrophysicists or reservoir and drilling engineers - also when they ask for project ideas for an energy or geoscience hackathon, or how to demo such an app, even if they do not name a file format.
 ---
 
 # Subsurface app builder
@@ -37,9 +37,11 @@ python scripts/segy_to_npy.py <file.sgy> data/survey               # memory-mapp
 | `scripts/subsurface_utils.py` | Curve alias table and `canonical_name`, tolerant LAS reading, `las_to_frame`, unit fixing, quick-look petrophysics (`vshale_gr`, `porosity_density`, `porosity_density_neutron`, `sw_archie`, `net_pay_flags`, `net_pay_summary`, `flag_bad_hole`), FactPages loading into pandas or DuckDB, UTM to lat/lon, cube loading, horizon gridding and amplitude extraction |
 | `scripts/subsurface_plots.py` | `log_plot` (standard multi-track layout), `crossplot`, `seismic_section`, `seismic_slice` |
 | `scripts/seismic_attributes.py` | Envelope, instantaneous phase and frequency, RMS amplitude, semblance |
+| `scripts/time_lapse.py` | 4D seismic: geometry check, NRMS repeatability, matching a monitor to a base, time shifts, aligned difference, change maps along a horizon |
+| `scripts/geosteering.py` | Horizontal wells: minimum-curvature path, vertical section, structure model from a type log, automatic dip fit, in-zone statistics, steering advice, curtain section figure |
 | `scripts/ask_data.py` | Natural-language questions over DuckDB tables (the model writes SQL; schema prompt is cached; read-only) |
 | `scripts/screenshot_app.py` | Starts a Streamlit app, clicks through its tabs and saves a screenshot of each, for visual checking |
-| `scripts/make_synthetic.py` | Plausible fake wells and a seismic cube for tests or when no data is available. Label synthetic data as such wherever it is shown |
+| `scripts/make_synthetic.py` | Plausible fake wells and a seismic cube for tests or when no data is available; `--monitor` adds a 4D monitor survey and `--geosteer` a horizontal well, both with known answers. Label synthetic data as such wherever it is shown |
 
 **6. Verify by running and by looking.** Run the app headless with Streamlit's `AppTest`, and also look at it: `python scripts/screenshot_app.py app.py shots/` saves one image per tab to read. A chart can be blank or mis-scaled without any error. Check numbers against physical sense using the ranges in `references/petrophysics.md` - a porosity of 0.5 or a net pay of 300 m means something upstream is wrong.
 
@@ -72,6 +74,8 @@ Read the one that matches the task; each is self-contained.
 | `references/well-logs.md` | Loading, harmonising and QC of LAS data; real-file failure modes; ML on logs |
 | `references/petrophysics.md` | Any calculation of shale volume, porosity, saturation or net pay; sanity ranges; standard log display |
 | `references/seismic.md` | Anything with SEG-Y: geometry problems, conversion, display, attributes, horizons, wells on seismic |
+| `references/time-lapse-seismic.md` | Two or more vintages of the same survey (4D): repeatability, matching, time shifts, difference maps, what the signals mean |
+| `references/geosteering.md` | Horizontal wells, surveys and trajectories, LWD logs against a type log, staying in a target zone, curtain sections |
 | `references/ncs-open-data.md` | Finding or joining open data: FactPages tables and their quirks, FORCE 2020 wells, Volve, reports, Diskos, licences |
 | `references/app-patterns.md` | Building or debugging the Streamlit app: caching, layout, plots, maps, known breakages, testing, deployment |
 | `references/llm-features.md` | Adding a language model: where it helps, token discipline, text-to-SQL, extraction, failure handling |

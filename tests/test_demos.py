@@ -28,6 +28,33 @@ def test_seismic_viewer():
     assert len(at.tabs) >= 3
 
 
+@pytest.fixture(scope="module")
+def synthetic():
+    """Demos 04 and 05 run on generated data, so create it when missing (a few seconds, no network)."""
+    if not (ROOT / "data/synthetic/monitor.npy").exists() or not (ROOT / "data/synthetic/geosteer/lateral.las").exists():
+        import subprocess
+        import sys
+        subprocess.run([sys.executable, str(ROOT / "scripts/prepare_synthetic.py")], check=True)
+
+
+def test_time_lapse(synthetic):
+    at = run_app("demos/04_time_lapse/app.py")
+    assert len(at.tabs) == 4 and len(at.metric) == 4
+    at.checkbox[1].check().run()            # align monitor to base
+    assert not at.exception, [e.value for e in at.exception]
+    at.checkbox[0].uncheck().run()          # no matching
+    assert not at.exception, [e.value for e in at.exception]
+
+
+def test_geosteering(synthetic):
+    at = run_app("demos/05_geosteering/app.py")
+    assert len(at.tabs) == 3 and len(at.metric) == 5
+    options = at.select_slider[0].options
+    for md in (options[0], options[-1]):    # just landed, and total depth
+        at.select_slider[0].set_value(md).run()
+        assert not at.exception, (md, [e.value for e in at.exception])
+
+
 @pytest.mark.skipif(not (ROOT / "data/factpages/field.csv").exists(), reason="factpages not downloaded")
 def test_ncs_explorer():
     at = run_app("demos/03_ncs_explorer/app.py")

@@ -93,9 +93,17 @@ FactMaps (factmaps.sodir.no) and the directorate's ArcGIS REST services hold the
 
 ## Diskos
 
-Diskos is Norway's national data repository for seismic, well and production data, run for the Norwegian Offshore Directorate. Full access is for member companies; released data becomes public after the confidentiality period (normally two years for well data, and `wlbReleasedDate` in FactPages gives the date). At hackathons the organisers typically provide an extract.
+Diskos (https://www.sodir.no/en/diskos/) is Norway's national data repository for petroleum data, a joint venture of the Norwegian Offshore Directorate and the oil companies. Companies report to the authorities through it, trade data in it, and released data is published from it. What it holds:
 
-A question-and-answer benchmark built from Diskos reports for testing language models on subsurface knowledge has been described publicly (about 1100 question-answer pairs). Its format was not verified when this was written. When handed an unfamiliar dataset like this, profile it before designing anything: file types and sizes, a schema and row count per table (`duckdb.sql("DESCRIBE SELECT * FROM 'file.csv'")`), a handful of sample records, the licence, and what key joins it to wellbores or fields.
+| Module | Content | When it becomes public |
+|---|---|---|
+| Seismic | Post-stack volumes, velocities and navigation; field and pre-stack data since 2012. More than 22 petabytes | By agreement or after the confidentiality period |
+| Wells | Logs, well paths, reports, core data, VSP | Raw data after 2 years, interpreted data after 5 |
+| Production | Monthly volumes | Per field immediately, per wellbore after 2 years |
+
+Access is through a member portal and a public portal, both linked from https://www.diskos.com/. Whether the public portal needs registration, and the download formats, were not confirmed; expect the industry standards (SEG-Y, LAS and DLIS, PDF reports). At hackathons the organisers typically provide an extract, so wait for it before building a downloader. `wlbReleasedDate` in FactPages gives each wellbore's release date, and FactPages is the practical index into what Diskos holds.
+
+A dataset called "DiskosQA" has been announced for at least one hackathon without a public description. The name suggests either question-and-answer pairs over Diskos documents or a data-quality set; which one, and the format, were not confirmed. When handed an unfamiliar dataset like this, profile it before designing anything: file types and sizes, a schema and row count per table (`duckdb.sql("DESCRIBE SELECT * FROM 'file.csv'")`), a handful of sample records, the licence, and what key joins it to wellbores or fields.
 
 ## Licences and attribution
 

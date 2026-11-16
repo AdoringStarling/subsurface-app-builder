@@ -70,6 +70,20 @@ When choosing, prefer an idea where (a) the data is already on disk, (b) the "ah
 **16. Subsurface Q&A evaluation.** If a domain Q&A benchmark is provided (for example one built from Diskos reports), build a small harness comparing models or retrieval strategies, with a results dashboard.
 - Demo moment: a leaderboard showing where retrieval helps and where it does not.
 
+## Time-lapse seismic and drilling
+
+**19. What changed? 4D screening tool.** Load two vintages, check they are comparable, match them, and produce maps of amplitude change and time shift at the reservoir with the noise floor stated. See `time-lapse-seismic.md`.
+- Data: two vintages from the organisers, Sleipner 4D (large; crop first), or `make_synthetic.py --monitor`.
+- One-day cut: sections with a base, monitor and difference toggle, plus one change map.
+- Demo moment: tick "align monitor to base" and the false difference below the reservoir disappears.
+- Extension: a language model writes a short interpretation from the map statistics and the production history of the field.
+
+**20. Geosteering replay and assistant.** Replay a horizontal well as it was drilled: fit formation dips to the LWD gamma ray, show the curtain section, and say where to steer. See `geosteering.md`.
+- Data: a horizontal well with survey and LWD log plus an offset well, Geosteering World Cup data, or `make_synthetic.py --geosteer`.
+- One-day cut: the "drilled to" slider, the curtain section and the in-zone percentage.
+- Demo moment: drill ahead, the gamma ray rises, the app shows the bit leaving the sand and proposes a new inclination.
+- Extension: compare the automatic interpretation with a human one; add resistivity; score a whole well by metres in zone.
+
 ## Cross-domain
 
 **17. Well-to-seismic tie.** Synthetic seismogram from sonic and density, displayed beside the seismic trace at the well location, with a stretch/shift control.
